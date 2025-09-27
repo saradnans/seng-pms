@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="chatbot.css">
+  <title>AI Chatbot</title>
+</head>
+<body>
+  <h2 class="welcome">Pakenham Hospital's AI Assistant</h2>
+
+  <div class="container">
+    <h3>Chat with our assistant! Here to help you with general inquiries and mental health support.</h3>
+
+    <div class="chat-window" id="chat-window">
+      <div class="message bot">Hello! I'm your personalized hospital assistant. How can I help you today? 💙</div>
+    </div>
+
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Type your message..." required>
+      <button type="submit">Send</button>
+    </form>
+
+    <p><a href="dashboard.html">Back to Dashboard</a></p>
+  </div>
+
+  <script>
+    const chatWindow = document.getElementById('chat-window');
+    const form = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const text = userInput.value;
+      if(!text) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.classList.add('message','user');
+      userMsg.textContent = text;
+      chatWindow.appendChild(userMsg);
+
+      const botMsg = document.createElement('div');
+      botMsg.classList.add('message','bot');
+
+      const msg = text.toLowerCase();
+
+      if(msg.includes('treatment')) {
+        botMsg.textContent = "You can check your treatment progress in the Dashboard.";
+      } else if(msg.includes('attendance')) {
+        botMsg.textContent = "Your attendance record is available in the Dashboard section.";
+      } else if(msg.includes('mental') || msg.includes('stress') || msg.includes('anxiety') || msg.includes('suicidal') || msg.includes('suicide')) {
+        botMsg.textContent = "It's normal to feel stressed sometimes. Try deep breathing, taking a walk, or talking to someone you trust. I'm here for you 💙";
+      } else if(msg.includes('health') || msg.includes('body') || msg.includes('diet')) {
+        botMsg.textContent = "Maintaining good health includes regular exercise, balanced diet, and enough sleep. 🍎🏃‍♂️";
+      } else if(msg.includes('help') || msg.includes('question')) { 
+        botMsg.textContent = "Of course! What can I help you with? 😊";
+      } else if(msg.includes('hello') || msg.includes('hi')) {
+        botMsg.textContent = "Hello! I'm your friendly hospital assistant. How can I help you today? 😊";
+      } else {
+        botMsg.textContent = "I'm here to help with health or mental health questions, or to guide you through the Dashboard.";
+      }
+
+      chatWindow.appendChild(botMsg);
+      userInput.value = '';
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    });
+  </script>
+</body>
+</html>
+
+

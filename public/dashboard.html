@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dashboard.css">
+  <title>Patient Dashboard</title>
+</head>
+<body>
+  <h2 class="welcome" id="welcomeName">Hello, </h2>
+
+  <div class="dashboard-container">
+    <div class="cards">
+      <div class="card">
+        <h3>Treatment Progress</h3>
+        <div class="progress-bar">
+          <div class="progress" id="treatmentProgress" style="width: 0%;"></div>
+        </div>
+        <p id="progressText">0% Completed</p>
+      </div>
+
+      <div class="card">
+        <h3>Upcoming Appointment</h3>
+        <p>Doctor: <span id="appointmentDoctor">N/A</span></p>
+        <p>Date: <span id="appointmentDate">N/A</span></p>
+        <p>Time: <span id="appointmentTime">N/A</span></p>
+      </div>
+    </div>
+
+    <div class="attendance">
+      <h3>Attendance / Visit History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Treatment</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTable">
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nav-links">
+      <a href="login.html">Logout</a> | 
+	  <a href="bookings.html">Book an Appointment</a> | 
+      <a href="chatbot.html">Go to AI Chatbot</a>
+    </p>
+  </div>
+
+  <script>
+fetch("/api/dashboard-data")
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("welcomeName").textContent = "Hello, " + (data.name || "User");
+
+    const progress = data.treatment.progress || 0;
+    document.getElementById("treatmentProgress").style.width = progress + "%";
+    document.getElementById("progressText").textContent = progress + "% Completed";
+
+    document.getElementById("appointmentDoctor").textContent = data.treatment.nextDoctor || "N/A";
+    document.getElementById("appointmentDate").textContent = data.treatment.nextDate || "N/A";
+    document.getElementById("appointmentTime").textContent = data.treatment.nextTime || "N/A";
+
+    const tableBody = document.getElementById("attendanceTable");
+    tableBody.innerHTML = "";
+    data.history.forEach(item => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.date || "N/A"}</td>
+        <td>${item.doctor || "N/A"}</td>
+        <td>${item.treatment || "N/A"}</td>
+        <td>${item.status || "N/A"}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  })
+  .catch(err => console.error("Error fetching dashboard data:", err));
+  </script>
+</body>
+</html>

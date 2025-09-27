@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #E1F5FE 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  gap: 20px;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+  background: #BBDEFB;
+  transform: rotate(45deg);
+  border-radius: 50px;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  right: -150px;
+  width: 600px;
+  height: 600px;
+  background: #E3F2FD;
+  transform: rotate(-30deg);
+  border-radius: 50px;
+  z-index: 0;
+  opacity: 0.25;
+}
+
+h2 {
+  color: #1976D2;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  white-space: nowrap;
+  z-index: 1;
+  position: relative;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 25px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  border: 2px solid #90CAF9;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  animation: fadeIn 1s ease forwards;
+}
+
+label {
+  font-weight: 500;
+  color: #555;
+}
+
+select,
+input[type="date"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #B3E5FC;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+
+select:focus,
+input[type="date"]:focus,
+input[type="text"]:focus {
+  border-color: #64B5F6;
+  box-shadow: 0 0 10px #90CAF9;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #64B5F6, #42A5F5);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #42A5F5, #1E88E5);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+p {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+p a {
+  color: #2196F3;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
