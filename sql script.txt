@@ -1,0 +1,78 @@
+Hi ! Welcome to Pakenham Hospital's compilation of the SQL script currently being tested for the interactive PMS' prototype. Our beta testers have already begun the initial tests of this system and will be documenting their findings in reports for further review.
+
+For user ease, the insert statements used by our beta testers have been included too. The registration function in the PMS is still under construction therefore, only verified users are allowed to test it. Please select one of the registered accounts and login to access the PMS. To make things easier for testers, INSERT statements related to patient records and appointments have been included too, but using them is not mandatory, as a booking feature has already been incorporated into the PMS. 
+
+The password for MySQL has been set to "cardigan". You are free to change this in the 'Server' class of the JavaScript code. Blank password is also acceptable but may need to be configured in XAMPP settings, as was observed in project migration during the testing phase.
+
+CREATE DATABASE IF NOT EXISTS `pms`
+USE `pms`;
+
+CREATE TABLE `users` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+);
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
+(1, 'Sara Adnan', 'k230302@student.kent.edu.au', 'sara'),
+(2, 'Marvel Jaya', 'k240248@student.kent.edu.au', 'marvel'),
+(3, 'Shafin Ahmed', 'k232155@student.kent.edu.au', 'shafin'),
+(4, 'Faisal Dipto', 'k232081@student.kent.edu.au', 'faisal'),
+(5, 'Fazlullah Khan', 'fazlullah.khan@kent.edu.au', 'fazlullah');
+
+
+CREATE TABLE `attendance` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `visit_date` DATE DEFAULT NULL,
+  `doctor_name` VARCHAR(100) DEFAULT NULL,
+  `treatment` VARCHAR(100) DEFAULT NULL,
+  `status` VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+);
+
+
+INSERT INTO `attendance` (`id`, `user_id`, `visit_date`, `doctor_name`, `treatment`, `status`) VALUES
+(1, 1, '2025-09-06', 'Dr. Rao', 'Checkup', 'Attended'),
+(2, 1, '2025-09-13', 'Dr. Barnes', 'Blood Test', 'Attended'),
+(3, 1, '2025-09-15', 'Dr. Jones', 'Physiotherapy', 'Pending'),
+(4, 2, '2025-09-02', 'Dr. Wells', 'Dental Checkup', 'Missed'),
+(5, 2, '2025-09-09', 'Dr. Barnes', 'Blood Test', 'Attended'),
+(6, 2, '2025-09-20', 'Dr. Swift', 'Vaccination', 'Pending'),
+(7, 3, '2025-09-03', 'Dr. Jones', 'Physiotherapy', 'Attended'),
+(8, 3, '2025-09-10', 'Dr. Swift', 'Vaccination', 'Attended'),
+(9, 3, '2025-09-11', 'Dr. Grace', 'Eye Exam', 'Attended'),
+(10, 4, '2025-09-01', 'Dr. Grace', 'Eye Exam', 'Attended'),
+(11, 4, '2025-09-07', 'Dr. Rao', 'Checkup', 'Missed'),
+(12, 4, '2025-09-20', 'Dr. Wells', 'Dental Checkup', 'Pending'),
+(13, 5, '2025-09-02', 'Dr. Rao', 'Checkup', 'Attended'),
+(14, 5, '2025-09-04', 'Dr. Wells', 'Dental Checkup', 'Missed'),
+(15, 5, '2025-09-10', 'Dr. Swift', 'Vaccination', 'Missed');
+
+
+CREATE TABLE `treatments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `progress_percent` INT DEFAULT '0',
+  `next_doctor` VARCHAR(100) DEFAULT NULL,
+  `next_date` DATE DEFAULT NULL,
+  `next_time` TIME DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `treatments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+);
+
+
+INSERT INTO `treatments` (`id`, `user_id`, `progress_percent`, `next_doctor`, `next_date`, `next_time`) VALUES
+(1, 1, 0, 'Dr. Jones', '2025-09-15', '09:30:00'),
+(2, 2, 33, 'Dr. Swift', '2025-09-20', '14:00:00'),
+(3, 3, 100, NULL, NULL, NULL),
+(4, 4, 33, 'Dr. Wells', '2025-09-20', '10:15:00'),
+(5, 5, 33, NULL, NULL, NULL);
+
+
